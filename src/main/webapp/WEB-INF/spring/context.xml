@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--для работы с проперти файлом-->
+    <context:property-placeholder location="classpath*:jdbc.properties"/>
+
+    <!--подключаем декларативное управление mvc компонентами-->
+    <mvc:annotation-driven/>
+
+    <!--подключаем и настраиваем арбитр представлений-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" id="viewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <context:component-scan base-package="by.tms"/>
+
+    <!--обьявляем один перехватчик-->
+    <!--<mvc:interceptors>-->
+    <!--<mvc:interceptor>-->
+    <!--<mvc:mapping path="/*"/>-->
+    <!--&lt;!&ndash;Inter помечен @Component&ndash;&gt;-->
+    <!--<ref bean="inter"/>-->
+    <!--</mvc:interceptor>-->
+    <!--</mvc:interceptors>-->
+
+    <!--включение @Transactional-->
+    <tx:annotation-driven/>
+
+    <!--настраиваем источник данных-->
+    <!--смотрите свои настройки в jdbc.properties-->
+    <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="initialSize" value="${dbcp.initialSize}"/>
+        <property name="maxActive" value="${dbcp.maxActive}"/>
+    </bean>
+
+    <!--встр. база данных-->
+    <!--<jdbc:embedded-database id="dataSource" type="H2"/>-->
+
+    <!--подключаем менеджер транзакций-->
+    <!--<bean id="txManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">-->
+    <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf"/>
+    </bean>
+
+    <!--подключаем фабрику сессий гибернейта-->
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+        </property>
+        <property name="packagesToScan" value="by.tms.onlinestore.entity"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.jdbc.fetch_size">50</prop>
+                <prop key="hibernate.jdbc.batch_size">10</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--подключаем декларативное управление кешем-->
+    <!--<cache:annotation-driven/>-->
+
+    <!--менеджер кеша-->
+    <!--<bean id="cacheManager" class="org.springframework.cache.concurrent.ConcurrentMapCacheManager"/>-->
+
+    <!--транслятор персистенс исключений-->
+    <!--<bean id="exceptionTranslationPostProcessor"-->
+    <!--class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>-->
+
+</beans>
