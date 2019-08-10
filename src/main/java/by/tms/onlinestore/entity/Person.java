@@ -1,9 +1,12 @@
 package by.tms.onlinestore.entity;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.util.Objects;
 
+@Data
 @Entity
 @Table (name = "PERSONS")
 public class Person {
