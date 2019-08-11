@@ -13,7 +13,7 @@
     Добро пожаловать на OnlineStore!
 </c:if>
 <c:if test="${sessionScope.currentPerson != null}">
-    Добро пожаловать, ${sessionScope.currentPerson.getLogin()}!&nbsp;<a href="${pageContext.request.contextPath}/logout">Выход</a>
+    ${sessionScope.currentPerson.getLogin()}, Добро пожаловать на OnlineStore!&nbsp;<a href="${pageContext.request.contextPath}/logout">Выход</a>
 </c:if>
 </p>
 <hr/>

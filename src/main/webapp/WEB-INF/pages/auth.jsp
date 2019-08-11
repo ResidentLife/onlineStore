@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" value="Sign in"/>&nbsp;<a href="${pageContext.request.contextPath}/reg">Sign up</a></td>
+            <td><input type="submit" value="Войти"/>&nbsp;<a href="${pageContext.request.contextPath}/">На главную страницу</a></td>
         </tr>
     </table>
 

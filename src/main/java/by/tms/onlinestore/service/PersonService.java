@@ -17,11 +17,21 @@ public class PersonService {
     }
 
     public void savePerson(Person person) {
-        Person p = new Person(person.getId(), person.getLogin(), person.getPassword(), Role.user);
+        if (person.getRole() == null) {
+            person.setRole(Role.user);
+        }
+        Person p = new Person(person.getLogin(), person.getPassword());
         personRepository.savePerson(p);
     }
 
     public Person FindPerson (Person person) {
         return personRepository.findPerson(person);
+    }
+
+    public boolean isLoginExist (String login) {
+        if (personRepository.isLoginExist(login) != null) {
+            return true;
+        }
+        return false;
     }
 }

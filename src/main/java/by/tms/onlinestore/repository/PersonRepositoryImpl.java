@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 
 @Repository
@@ -36,4 +35,10 @@ public class PersonRepositoryImpl implements PersonRepository {
                 .setParameter("password", person.getPassword())
                 .getSingleResult();
     }
+
+    @Override
+    public Person isLoginExist(String login) {
+        return entityManager.find(Person.class, login);
+    }
 }
+

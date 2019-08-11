@@ -10,4 +10,6 @@ public interface PersonRepository {
 
     Person findPerson(Person person);
 
+    Person isLoginExist (String login);
+
 }
