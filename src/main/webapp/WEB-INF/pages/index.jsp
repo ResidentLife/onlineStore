@@ -10,21 +10,19 @@
 <hr/>
 <p>
 <c:if test="${sessionScope.currentPerson == null}">
-    Добро пожаловать на OnlineStore!
+    Добро пожаловать на OnlineStore!&nbsp;
+    <a href="${pageContext.request.contextPath}/reg">Регистрация</a>&nbsp;
+    <a href="${pageContext.request.contextPath}/auth">Вход</a>&nbsp;
 </c:if>
 <c:if test="${sessionScope.currentPerson != null}">
     ${sessionScope.currentPerson.getLogin()}, Добро пожаловать на OnlineStore!&nbsp;<a href="${pageContext.request.contextPath}/logout">Выход</a>
 </c:if>
 </p>
 <hr/>
-<a href="${pageContext.request.contextPath}/purchases">Список товаров</a>
-<c:if test="${sessionScope.currentPerson == null}">
-    <a href="${pageContext.request.contextPath}/reg">Регистрация</a>
-    <a href="${pageContext.request.contextPath}/auth">Вход</a>
-</c:if>
+    <a href="${pageContext.request.contextPath}/items">Список товаров</a>
 <hr/>
 <c:if test="${sessionScope.currentPerson.getRole() == 'admin'}">
-    admin
+    <button type="button"><a href="${pageContext.request.contextPath}/newitem">Добавить товар</a></button>
 </c:if>
 </body>
 </html>

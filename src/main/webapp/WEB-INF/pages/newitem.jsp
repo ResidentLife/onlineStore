@@ -29,7 +29,7 @@
     <c:if test="${role == 'admin'}">
         <table cellpadding="2">
             <tr>
-                <td><strong>Заглавие</strong><br/> (максимум 150 символов)</td>
+                <td><strong>Название</strong><br/> (максимум 150 символов)</td>
                 <td><label>
                     <input required type="text" name="title" size=30 maxlength="150">
                 </label></td>
@@ -56,7 +56,7 @@
         </table>
         <hr/>
         <button type="submit">Сохранить</button>
-        <button type="button"><a href="${pageContext.request.contextPath}/">Вернуться к товарам</button>
+        <button type="button"><a href="${pageContext.request.contextPath}/items">Вернуться к товарам</button>
 
         <%--@elvariable id="exception" type="exception"--%>
         <%--<c:if test="${not empty exception}">--%>
